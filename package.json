@@ -1,0 +1,64 @@
+{
+  "name": "wfd-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/desruc/wfd-api.git",
+  "author": "James Cameron",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec ts-node --files src/index.ts",
+    "build": "cd src && tsc",
+    "lint": "eslint ./src/**/**.ts",
+    "lint:fix": "eslint ./src/**/**.ts --fix",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
+    "pre-commit": "lint-staged"
+  },
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.11.0",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.10",
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.8",
+    "@types/joi": "^14.3.4",
+    "@types/lodash": "^4.14.162",
+    "@types/mongoose": "^5.7.36",
+    "@types/morgan": "^1.9.1",
+    "@types/node": "^14.14.2",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.12.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "_moduleDirectories": [
+    "src"
+  ]
+}
