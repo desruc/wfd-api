@@ -1,6 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 
-export interface IRecipe extends Document {
+export interface RecipeBase {
   uuid: string;
   title: string;
   description: string;
@@ -20,7 +20,11 @@ export interface IRecipe extends Document {
   };
 }
 
-const recipeModel: Schema = new Schema({
+interface RecipeDocument extends RecipeBase, Document {
+  id: string;
+}
+
+const recipe: Schema<RecipeDocument> = new Schema({
   uuid: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -40,4 +44,4 @@ const recipeModel: Schema = new Schema({
   }
 });
 
-export default model<IRecipe>('Recipe', recipeModel);
+export default model<RecipeDocument>('Recipe', recipe);

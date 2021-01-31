@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import catchErrors from '../core/asyncCatch';
+import catchErrors from '~/core/catchErrors';
 
-import Recipe from '../models/recipeModel';
+import Recipe from '~/models/recipe';
 
 export const createRecipe = catchErrors(async (req, res) => {
   const newRecipe = await new Recipe({ uuid: uuidv4(), ...req.body }).save();

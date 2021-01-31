@@ -8,7 +8,7 @@ import pagination from './pagination';
 
 import logger from './logger';
 
-import routes from '../routes';
+import routes from '~/routes';
 
 const initializeServer = (): Application => {
   const app = express();

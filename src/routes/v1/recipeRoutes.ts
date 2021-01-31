@@ -1,19 +1,25 @@
-import { Application } from 'express';
+import express, { Router } from 'express';
 
-import validator from '../../core/validator';
-import * as recipeValidators from '../../validators/recipe';
+import checkAuth from '~/middleware/auth';
+import validate from '~/middleware/validate';
 
-import * as recipeController from '../../controllers/recipeController';
+import * as recipeValidators from '~/validators/recipe';
 
-import checkAuth from '../../middleware/auth';
+import * as recipeController from '~/controllers/v1/recipeController';
 
-export default (app: Application, prefix: string): void => {
-  app.post(
-    `${prefix}/`,
+export default (): Router => {
+  const router = express.Router();
+
+  router.post(
+    '/',
     checkAuth,
-    validator(recipeValidators.create),
+    validate(recipeValidators.create),
     recipeController.createRecipe
   );
-  app.get(`${prefix}`, recipeController.getPublicList);
-  app.get(`${prefix}/:uuid`, recipeController.getRecipe);
+
+  router.get('/', recipeController.getPublicList);
+
+  router.get('/:uuid', recipeController.getRecipe);
+
+  return router;
 };

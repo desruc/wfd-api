@@ -1,6 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 
-export interface IRecipeRating extends Document {
+export interface RecipeRatingBase {
   userUuid: string;
   ratings: {
     recipeUuid: string;
@@ -8,7 +8,11 @@ export interface IRecipeRating extends Document {
   }[];
 }
 
-const recipeRatingModel: Schema = new Schema({
+export interface RecipeRatingDocument extends RecipeRatingBase, Document {
+  id: string;
+}
+
+const recipeRating: Schema<RecipeRatingDocument> = new Schema({
   userUuid: { type: String, required: true },
   ratings: [
     {
@@ -18,4 +22,4 @@ const recipeRatingModel: Schema = new Schema({
   ]
 });
 
-export default model<IRecipeRating>('Recipe', recipeRatingModel);
+export default model<RecipeRatingDocument>('Recipe', recipeRating);

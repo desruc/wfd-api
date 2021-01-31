@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import logger from '../core/logger';
+import logger from '~/core/logger';
 
 const nodeEnv = process.env.NODE_ENV;
 

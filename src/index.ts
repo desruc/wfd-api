@@ -1,6 +1,8 @@
+import 'module-alias/register';
 import 'dotenv/config';
-import logger from './core/logger';
 
+import env from './core/env';
+import logger from './core/logger';
 import initializeDb from './config/db';
 import initializeServer from './core/app';
 
@@ -22,7 +24,7 @@ process.on('uncaughtException', (e) => {
 const initializeApp = async (): Promise<void> => {
   await initializeDb();
   const server = initializeServer();
-  server.listen(process.env.PORT || 3000);
+  server.listen(env.EXPRESS_PORT || 3000);
 };
 
 /* eslint-disable-next-line @typescript-eslint/no-floating-promises */

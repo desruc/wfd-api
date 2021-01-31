@@ -1,2 +1,4 @@
 build/*
 init-local-mongo.js
+jest-mongodb-config.js
+jest.config.js

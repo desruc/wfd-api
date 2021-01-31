@@ -1,13 +1,15 @@
-import { Application, RequestHandler } from 'express';
+import { Application } from 'express';
+
+import { checkStatus } from '~/controllers/v1/status';
 
 import recipeRoutes from './v1/recipeRoutes';
 
-const healthCheck: RequestHandler = (_req, res) =>
-  res.status(200).json('Alive and kicking');
-
 export const attachRoutes = (app: Application): void => {
-  app.get('/health', healthCheck);
-  recipeRoutes(app, '/v1/recipe');
+  const PREFIX = '/v1';
+
+  app.get('/status', checkStatus);
+
+  app.use(`${PREFIX}/recipes`, recipeRoutes());
 };
 
 export default attachRoutes;
