@@ -25,3 +25,9 @@ export const CORE_UNPROCESSABLE_DATABASE_ENTITY: CustomError = {
   description:
     'Called when mongoose throws an error. Usually when there is an improperly formatted object being saved'
 };
+
+export const CORE_ENTITY_NOT_FOUND: CustomError = {
+  code: 'core/entity-not-found',
+  message: 'The requested resource could not be found',
+  status: 404
+};

@@ -5,11 +5,14 @@ import validate from '~/middleware/validate';
 
 import * as recipeValidators from '~/validators/recipe';
 
-import * as recipeController from '~/controllers/v1/recipeController';
+import * as recipeController from '~/controllers/v1/recipe';
 
 export default (): Router => {
   const router = express.Router();
 
+  /**
+   * POST: Create Recipe
+   */
   router.post(
     '/',
     checkAuth,
@@ -17,9 +20,15 @@ export default (): Router => {
     recipeController.createRecipe
   );
 
+  /**
+   * GET: Get paginated public recipes
+   */
   router.get('/', recipeController.getPublicList);
 
-  router.get('/:uuid', recipeController.getRecipe);
+  /**
+   * GET: Get specified recipe
+   */
+  router.get('/:recipeId', recipeController.getRecipe);
 
   return router;
 };

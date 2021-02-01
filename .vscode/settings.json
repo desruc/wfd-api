@@ -1,0 +1,26 @@
+{
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "editor.rulers": [80, 100, 120],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.workingDirectories": [
+    {
+      "directory": "./api",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./client",
+      "changeProcessCWD": true
+    }
+  ],
+  "editor.formatOnSave": false,
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  }
+}
