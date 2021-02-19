@@ -1,5 +1,8 @@
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
+
+import { ensureLocalRecordExists } from '~/services/user';
 
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 const checkJwt = jwt({
@@ -15,4 +18,13 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
-export default checkJwt;
+const checkAuth = (req: Request, res: Response, next: NextFunction): void =>
+  checkJwt(req, res, async () => {
+    const { sub } = req.user;
+
+    await ensureLocalRecordExists(sub);
+
+    next();
+  });
+
+export default checkAuth;
