@@ -16,7 +16,7 @@ export interface RecipeDocument extends RecipeBase, Document {
   id: string;
 }
 
-const recipe: Schema<RecipeDocument> = new Schema(
+const Recipe: Schema<RecipeDocument> = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -31,4 +31,4 @@ const recipe: Schema<RecipeDocument> = new Schema(
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
 
-export default model<RecipeDocument>('Recipe', recipe);
+export default model<RecipeDocument>('Recipe', Recipe);

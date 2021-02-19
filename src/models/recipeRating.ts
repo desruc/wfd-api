@@ -5,28 +5,22 @@ const {
 } = Schema;
 
 export interface RecipeRatingBase {
-  userUuid: string;
-  ratings: {
-    recipeUuid: string;
-    score: number;
-  }[];
+  user: string;
+  recipe: string;
+  score: number;
 }
 
 export interface RecipeRatingDocument extends RecipeRatingBase, Document {
   id: string;
 }
 
-const recipeRating: Schema<RecipeRatingDocument> = new Schema(
+const RecipeRating: Schema<RecipeRatingDocument> = new Schema(
   {
     user: { type: ObjectId, ref: 'User', required: true },
-    ratings: [
-      {
-        recipe: { type: ObjectId, ref: 'Recipe', required: true },
-        score: { type: Number, required: true }
-      }
-    ]
+    recipe: { type: ObjectId, ref: 'Recipe', required: true },
+    score: { type: Number, required: true }
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
 
-export default model<RecipeRatingDocument>('RecipeRating', recipeRating);
+export default model<RecipeRatingDocument>('RecipeRating', RecipeRating);

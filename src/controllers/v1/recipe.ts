@@ -14,8 +14,8 @@ export const createRecipe = catchErrors(async (req, res) => {
  * Get a recipe
  */
 export const getRecipe = catchErrors(async (req, res) => {
-  const { uuid } = req.params;
-  const result = await recipeService.getRecipeByQueryOrFail({ uuid });
+  const { recipeId } = req.params;
+  const result = await recipeService.getRecipeByQueryOrFail({ _id: recipeId });
   res.success({ message: 'Recipe retrieved successfully', data: result });
 });
 
