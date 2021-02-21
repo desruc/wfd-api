@@ -8,7 +8,7 @@ import CustomError from './customError';
 import { CORE_UNAUTHORIZED } from '~/errors/core';
 
 const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
-  logger.error(error);
+  logger.error(JSON.stringify(error));
 
   const isErrorSafeForClient = error instanceof CustomError;
 

@@ -1,6 +1,7 @@
 import catchErrors from '~/core/catchErrors';
 
 import * as recipeService from '~/services/recipe';
+import * as recipeRatingService from '~/services/recipeRating';
 
 /**
  * Create a recipe
@@ -16,7 +17,13 @@ export const createRecipe = catchErrors(async (req, res) => {
 export const getRecipe = catchErrors(async (req, res) => {
   const { recipeId } = req.params;
   const result = await recipeService.getRecipeByQueryOrFail({ _id: recipeId });
-  res.success({ message: 'Recipe retrieved successfully', data: result });
+
+  const rating = await recipeRatingService.getRatingForRecipe(recipeId);
+
+  res.success({
+    message: 'Recipe retrieved successfully',
+    data: { ...result.toJSON(), rating }
+  });
 });
 
 /**

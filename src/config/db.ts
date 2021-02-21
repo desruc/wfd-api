@@ -41,16 +41,20 @@ const initializeDb = async (): Promise<void> => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     connectTimeoutMS: 5000,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
   };
 
-  await mongoose.connect(url, options, (error) => {
-    if (error) {
-      logger.error('MONGO: Error connecting to database - ', error);
-      process.exit(0);
-    } else {
-      logger.info('MONGO: Database connection established');
-    }
+  await new Promise((resolve) => {
+    mongoose.connect(url, options, (error) => {
+      if (error) {
+        logger.error('MONGO: Error connecting to database - ', error);
+        process.exit(0);
+      } else {
+        logger.info('MONGO: Database connection established');
+        resolve(null);
+      }
+    });
   });
 };
 

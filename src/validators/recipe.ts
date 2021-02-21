@@ -12,4 +12,8 @@ export const create = Joi.object().keys({
   time: Joi.string().required()
 });
 
+export const rating = Joi.object().keys({
+  score: Joi.number().required()
+});
+
 export default create;

@@ -1,8 +1,5 @@
 import RecipeRating, { RecipeRatingDocument } from '~/models/recipeRating';
 
-import CustomError from '~/core/customError';
-import { CORE_ENTITY_NOT_FOUND } from '~/errors/core';
-
 /**
  * Computes the current rating for a recipe
  * @param recipeId a valid recipe id
@@ -29,49 +26,34 @@ export const getUserRatings = async (
 };
 
 /**
- * Creates and returns a recipe rating database record
+ * Returns the users rating for the specified recipe if it exists or returns null
+ * @param recipeId a valid recipe id
+ * @param userId the auth user id
+ */
+export const getUserRatingForRecipe = async (
+  recipeId: string,
+  userId: string
+): Promise<RecipeRatingDocument | null> => {
+  const rating = await RecipeRating.findOne({ user: userId, recipe: recipeId });
+  return rating;
+};
+
+/**
+ * Creates/updates and returns a recipe rating database record
  * @param recipeId a valid recipe id
  * @param userId the id of the user posting the rating
  * @param score the score the user gives the recipe
  */
-export const createRecipeRating = async (
+export const createOrUpdateRecipeRating = async (
   recipeId: string,
   userId: string,
   score: number
 ): Promise<RecipeRatingDocument> => {
-  const result = await new RecipeRating({
-    recipe: recipeId,
-    user: userId,
-    score
-  }).save();
-
-  return result;
-};
-
-/**
- * Updates and returns an existing recipe rating. Throws an error if the rating
- * does not exist.
- * @param recipeId a valid recipe id
- * @param userId the auth user id
- * @param score the updated score
- */
-export const updateRecipeRating = async (
-  recipeId: string,
-  userId: string,
-  score: number
-): Promise<RecipeRatingDocument> => {
-  const updated = await RecipeRating.findOneAndUpdate(
+  const result = await RecipeRating.findOneAndUpdate(
     { recipe: recipeId, user: userId },
-    { score },
-    { new: true }
+    { recipe: recipeId, user: userId, score },
+    { upsert: true, new: true }
   );
 
-  if (!updated) {
-    throw new CustomError({
-      ...CORE_ENTITY_NOT_FOUND,
-      message: 'The requested recipe rating could not be found'
-    });
-  }
-
-  return updated;
+  return result;
 };

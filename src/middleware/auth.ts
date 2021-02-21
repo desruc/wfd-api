@@ -22,7 +22,9 @@ const checkAuth = (req: Request, res: Response, next: NextFunction): void =>
   checkJwt(req, res, async () => {
     const { sub } = req.user;
 
-    await ensureLocalRecordExists(sub);
+    const userRecord = await ensureLocalRecordExists(sub);
+
+    req.user.id = userRecord.id;
 
     next();
   });

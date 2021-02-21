@@ -1,4 +1,4 @@
-import User from '~/models/user';
+import User, { UserDocument } from '~/models/user';
 
 /**
  * Creates a user record in mongo if none exists
@@ -6,10 +6,13 @@ import User from '~/models/user';
  */
 export const ensureLocalRecordExists = async (
   auth0Id: string
-): Promise<void> => {
+): Promise<UserDocument> => {
   const exists = await User.findOne({ auth0Id });
 
   if (!exists) {
-    await new User({ auth0Id }).save();
+    const newUser = await new User({ auth0Id }).save();
+    return newUser;
   }
+
+  return exists;
 };

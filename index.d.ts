@@ -16,6 +16,7 @@ declare namespace Express {
     };
     user: {
       sub: string;
+      id: string;
     };
   }
 }

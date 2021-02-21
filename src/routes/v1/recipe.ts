@@ -6,6 +6,7 @@ import validate from '~/middleware/validate';
 import * as recipeValidators from '~/validators/recipe';
 
 import * as recipeController from '~/controllers/v1/recipe';
+import * as recipeRatingController from '~/controllers/v1/recipeRating';
 
 export default (): Router => {
   const router = express.Router();
@@ -29,6 +30,25 @@ export default (): Router => {
    * GET: Get specified recipe
    */
   router.get('/:recipeId', recipeController.getRecipe);
+
+  /**
+   * POST: Post a rating to a recipe
+   */
+  router.post(
+    '/:recipeId/rating',
+    checkAuth,
+    validate(recipeValidators.rating),
+    recipeRatingController.createRecipeRating
+  );
+
+  /**
+   * GET: Get the users rating for specified rating
+   */
+  router.get(
+    '/:recipeId/rating',
+    checkAuth,
+    recipeRatingController.getUserRating
+  );
 
   return router;
 };
