@@ -2,6 +2,8 @@ import { Document, model, Schema } from 'mongoose';
 
 export interface UserBase {
   auth0Id: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface UserDocument extends UserBase, Document {
@@ -10,7 +12,9 @@ export interface UserDocument extends UserBase, Document {
 
 const User: Schema<UserDocument> = new Schema(
   {
-    auth0Id: { type: String, required: true }
+    auth0Id: { type: String, required: true },
+    firstName: { type: String, default: null },
+    lastName: { type: String, default: null }
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
