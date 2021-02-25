@@ -22,6 +22,11 @@ export default (): Router => {
   );
 
   /**
+   * GET: Get a paginated list of auth users recipes
+   */
+  router.get('/me', checkAuth, recipeController.getAuthUserRecipes);
+
+  /**
    * GET: Get paginated public recipes
    */
   router.get('/', recipeController.getPublicList);
@@ -49,6 +54,11 @@ export default (): Router => {
     checkAuth,
     recipeRatingController.getUserRating
   );
+
+  /**
+   * GET: Get a paginated list of public recipes by the specified user
+   */
+  router.get('/user/:userId', recipeController.getUserRecipes);
 
   return router;
 };

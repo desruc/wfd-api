@@ -17,10 +17,14 @@ export const connect = async (): Promise<void> => {
     useFindAndModify: false
   };
 
-  await mongoose.connect(uri, mongooseOpts, (error) => {
-    if (error) {
-      process.exit(0);
-    }
+  await new Promise((resolve) => {
+    mongoose.connect(uri, mongooseOpts, (error) => {
+      if (error) {
+        process.exit(0);
+      } else {
+        resolve(null);
+      }
+    });
   });
 };
 

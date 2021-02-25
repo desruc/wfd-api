@@ -8,6 +8,7 @@ export interface UserBase {
 
 export interface UserDocument extends UserBase, Document {
   id: string;
+  fullName?: string;
 }
 
 const User: Schema<UserDocument> = new Schema(
@@ -18,5 +19,11 @@ const User: Schema<UserDocument> = new Schema(
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
+
+User.virtual('fullName').get(function getFormattedName(this: UserDocument) {
+  if (this.firstName && this.lastName)
+    return `${this.firstName} ${this.lastName}`;
+  return 'a phantom chef';
+});
 
 export default model<UserDocument>('User', User);
