@@ -9,7 +9,8 @@ export const create = Joi.object().keys({
   tags: Joi.array().items(Joi.string()),
   ingredients: Joi.array().items(Joi.string()),
   instructions: Joi.array().items(Joi.string()),
-  time: Joi.string().required()
+  prepTime: Joi.string().allow(null, ''),
+  cookingTime: Joi.string().required()
 });
 
 export const rating = Joi.object().keys({

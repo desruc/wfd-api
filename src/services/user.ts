@@ -47,7 +47,7 @@ export const updateUser = async (
  * Either returns a user database record or fails.
  * @param query A valid MongoDB query
  */
-export const getRecipeByQueryOrFail = async (query: {
+export const getUserByQueryOrFail = async (query: {
   [key: string]: string | number;
 }): Promise<UserDocument> => {
   const userResult = await User.findOne(query);

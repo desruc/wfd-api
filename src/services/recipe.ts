@@ -12,7 +12,8 @@ interface CreateRecipeReq {
   tags?: string[];
   ingredients?: string[];
   instructions?: string[];
-  time: string;
+  prepTime?: string;
+  cookingTime: string;
 }
 
 /**

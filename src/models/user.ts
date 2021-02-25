@@ -4,6 +4,8 @@ export interface UserBase {
   auth0Id: string;
   firstName?: string;
   lastName?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserDocument extends UserBase, Document {

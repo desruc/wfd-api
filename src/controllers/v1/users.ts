@@ -22,11 +22,17 @@ export const updateUser = catchErrors(async (req, res) => {
 export const getUser = catchErrors(async (req, res) => {
   const { userId } = req.params;
 
-  const user = await userService.getRecipeByQueryOrFail({ _id: userId });
+  const user = await userService.getUserByQueryOrFail({ _id: userId });
 
   res.success({
     message: 'User retrieved successfully',
-    data: user
+    data: {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      fullName: user.fullName,
+      createdAt: user.createdAt
+    }
   });
 });
 
@@ -36,7 +42,7 @@ export const getUser = catchErrors(async (req, res) => {
 export const getAuthUser = catchErrors(async (req, res) => {
   const { id: userId } = req.user;
 
-  const user = await userService.getRecipeByQueryOrFail({ _id: userId });
+  const user = await userService.getUserByQueryOrFail({ _id: userId });
 
   res.success({
     message: 'User retrieved successfully',

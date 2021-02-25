@@ -13,7 +13,8 @@ export interface RecipeBase {
   tags: string[];
   ingredients: string[];
   instructions: string[];
-  time: string;
+  prepTime?: number;
+  cookingTime: number;
 }
 
 export interface RecipeDocument extends RecipeBase, Document {
@@ -30,13 +31,14 @@ const Recipe: Schema<RecipeDocument> = new Schema(
     tags: { type: [String], default: [] },
     ingredients: { type: [String], default: [] },
     instructions: { type: [String], default: [] },
-    time: { type: String, required: true }
+    prepTime: { type: Number, default: null },
+    cookingTime: { type: Number, required: true }
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
 
 Recipe.pre(/find/, function populateAuthor(this: RecipeDocument, next) {
-  this.populate('author', 'firstName lastName fullName id');
+  this.populate('author', 'firstName lastName id');
   next();
 });
 
