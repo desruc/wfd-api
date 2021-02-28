@@ -31,6 +31,29 @@ export const createRecipe = async (
 };
 
 /**
+ * Returns the updated community record. Fails if the community can not be found.
+ * @param query A valid MongoDB query
+ * @param data The updates to be applied to the community
+ */
+export const updateRecipe = async (
+  query: {
+    [key: string]: string | number;
+  },
+  data: { [key: string]: any }
+): Promise<RecipeDocument> => {
+  const updated = await Recipe.findOneAndUpdate(query, data, { new: true });
+
+  if (!updated) {
+    throw new CustomError({
+      ...CORE_ENTITY_NOT_FOUND,
+      message: 'The requested recipe could not be found'
+    });
+  }
+
+  return updated;
+};
+
+/**
  * Returns a paginated array of recipe records and the total number of records that match the query
  * @param skip The amount of records to skip. Defaults to 0.
  * @param limit The limit of records to return. Defaults to 20.

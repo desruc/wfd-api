@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 
 import checkAuth from '~/middleware/auth';
 import validate from '~/middleware/validate';
+import { canModifyRecipe } from '~/middleware/recipes';
 
 import * as recipeValidators from '~/validators/recipe';
 
@@ -59,6 +60,17 @@ export default (): Router => {
    * GET: Get a paginated list of public recipes by the specified user
    */
   router.get('/user/:userId', recipeController.getUserRecipes);
+
+  /**
+   * PUT: Update a recipe.
+   */
+  router.put(
+    '/:recipeId',
+    checkAuth,
+    canModifyRecipe,
+    validate(recipeValidators.update),
+    recipeController.updateRecipe
+  );
 
   return router;
 };

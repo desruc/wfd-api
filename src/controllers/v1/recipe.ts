@@ -13,6 +13,23 @@ export const createRecipe = catchErrors(async (req, res) => {
 });
 
 /**
+ * Update a recipe
+ */
+export const updateRecipe = catchErrors(async (req, res) => {
+  const { recipeId } = req.params;
+
+  const updatedRecipe = await recipeService.updateRecipe(
+    { _id: recipeId },
+    req.body
+  );
+
+  res.success({
+    message: 'Recipe updated successfully',
+    data: updatedRecipe
+  });
+});
+
+/**
  * Get a recipe
  */
 export const getRecipe = catchErrors(async (req, res) => {

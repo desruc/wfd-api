@@ -31,3 +31,11 @@ export const CORE_ENTITY_NOT_FOUND: CustomError = {
   message: 'The requested resource could not be found',
   status: 404
 };
+
+export const CORE_FORBIDDEN = {
+  code: 'core/forbidden',
+  message: 'You do not have permissions to perform that action.',
+  status: 403,
+  description:
+    'Called when then user is attempting to perform an action that they are not authorized to do'
+};
