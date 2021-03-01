@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import checkAuth from '~/middleware/auth';
+import { ensureAuthenticated } from '~/middleware/auth';
 import validate from '~/middleware/validate';
 
 import * as userValidators from '~/validators/user';
@@ -15,7 +15,7 @@ export default (): Router => {
    */
   router.put(
     '/',
-    checkAuth,
+    ensureAuthenticated,
     validate(userValidators.update),
     userController.updateUser
   );
@@ -23,7 +23,7 @@ export default (): Router => {
   /**
    * GET: Get the auth users mongo record
    */
-  router.get('/', checkAuth, userController.getAuthUser);
+  router.get('/', ensureAuthenticated, userController.getAuthUser);
 
   /**
    * GET: Get the specified users mongo record

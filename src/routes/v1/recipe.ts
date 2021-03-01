@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import checkAuth from '~/middleware/auth';
+import { ensureAuthenticated, checkAuthenticated } from '~/middleware/auth';
 import validate from '~/middleware/validate';
 import { canModifyRecipe } from '~/middleware/recipes';
 
@@ -17,7 +17,7 @@ export default (): Router => {
    */
   router.post(
     '/',
-    checkAuth,
+    ensureAuthenticated,
     validate(recipeValidators.create),
     recipeController.createRecipe
   );
@@ -25,7 +25,7 @@ export default (): Router => {
   /**
    * GET: Get a paginated list of auth users recipes
    */
-  router.get('/me', checkAuth, recipeController.getAuthUserRecipes);
+  router.get('/me', ensureAuthenticated, recipeController.getAuthUserRecipes);
 
   /**
    * GET: Get paginated public recipes
@@ -35,14 +35,14 @@ export default (): Router => {
   /**
    * GET: Get specified recipe
    */
-  router.get('/:recipeId', recipeController.getRecipe);
+  router.get('/:recipeId', checkAuthenticated, recipeController.getRecipe);
 
   /**
    * POST: Post a rating to a recipe
    */
   router.post(
     '/:recipeId/rating',
-    checkAuth,
+    ensureAuthenticated,
     validate(recipeValidators.rating),
     recipeRatingController.createRecipeRating
   );
@@ -52,7 +52,7 @@ export default (): Router => {
    */
   router.get(
     '/:recipeId/rating',
-    checkAuth,
+    ensureAuthenticated,
     recipeRatingController.getUserRating
   );
 
@@ -66,7 +66,7 @@ export default (): Router => {
    */
   router.put(
     '/:recipeId',
-    checkAuth,
+    ensureAuthenticated,
     canModifyRecipe,
     validate(recipeValidators.update),
     recipeController.updateRecipe
