@@ -34,15 +34,18 @@ export const updateRecipe = catchErrors(async (req, res) => {
  */
 export const getRecipe = catchErrors(async (req, res) => {
   const { recipeId } = req.params;
+
   const result = await recipeService.getRecipeByQueryOrFail({
     _id: recipeId
   });
 
   const rating = await recipeRatingService.getRatingForRecipe(recipeId);
 
+  const isAuthor = req?.user?.id ? req?.user?.id === result.author.id : false;
+
   res.success({
     message: 'Recipe retrieved successfully',
-    data: { ...result.toJSON(), rating }
+    data: { ...result.toJSON(), rating, isAuthor }
   });
 });
 

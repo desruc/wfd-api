@@ -8,7 +8,12 @@ export interface RecipeBase {
   title: string;
   description: string;
   image?: string;
-  author: string;
+  author: {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    fullName?: string;
+  };
   public: boolean;
   tags: string[];
   ingredients: string[];
