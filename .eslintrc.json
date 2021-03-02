@@ -28,7 +28,7 @@
     "radix": 0,
     "no-restricted-syntax": 0,
     "no-await-in-loop": 0,
-    "no-console": 0,
+    "no-console": "warn",
     "consistent-return": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-use-before-define": 0,
