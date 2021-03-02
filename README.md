@@ -2,7 +2,7 @@
 <p align="center">The backend for WFD! A Node/Express app written in TypeScript.</p>
 
 <h3 align="center">
-  <a href="https://github.com/desruc/wfd-next-js/tree/master/client">View client</a>
+  <a href="https://github.com/desruc/wfd-next-js/tree/master">View client</a>
 </h3>
 
 ## First things first! 🚨
