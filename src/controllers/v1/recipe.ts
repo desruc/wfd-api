@@ -97,10 +97,7 @@ export const getAuthUserRecipes = catchErrors(async (req, res) => {
  */
 export const getUserRecipes = catchErrors(async (req, res) => {
   const { userId } = req.params;
-  console.log(
-    '🚀 ~ file: recipe.ts ~ line 82 ~ getUserRecipes ~ userId',
-    userId
-  );
+
   const { page, skip, limit } = req.pagination;
 
   const query = { author: userId, public: true };

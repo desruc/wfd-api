@@ -6,7 +6,7 @@ import RecipeRating, { RecipeRatingDocument } from '~/models/recipeRating';
  */
 export const getRatingForRecipe = async (recipeId: string): Promise<number> => {
   const allRatings = await RecipeRating.find({ recipe: recipeId });
-  const count = await RecipeRating.find({ recipe: recipeId }).count();
+  const count = await RecipeRating.find({ recipe: recipeId }).countDocuments();
 
   const computedRating =
     allRatings.reduce((p, { score }) => p + score, 0) / count;

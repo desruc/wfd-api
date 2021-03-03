@@ -5,7 +5,7 @@ import asyncCatch from '~/core/catchErrors';
 import CustomError from '~/core/customError';
 import { CORE_FORBIDDEN } from '~/errors/core';
 
-import { getRecipeByQueryOrFail } from '~/services/recipe';
+import { getRecipeByQuery } from '~/services/recipe';
 
 export const canModifyRecipe: RequestHandler = asyncCatch(
   async (req, _res, next) => {
@@ -13,7 +13,7 @@ export const canModifyRecipe: RequestHandler = asyncCatch(
 
     const { recipeId } = req.params;
 
-    const recipe = await getRecipeByQueryOrFail({
+    const recipe = await getRecipeByQuery({
       _id: recipeId,
       author
     });
