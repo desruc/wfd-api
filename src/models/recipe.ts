@@ -20,6 +20,10 @@ export interface RecipeBase {
   instructions: string[];
   prepTime?: number;
   cookingTime: number;
+  ratings?: {
+    score: number;
+  }[];
+  rating?: number;
 }
 
 export interface RecipeDocument extends RecipeBase, Document {
@@ -30,7 +34,7 @@ const Recipe: Schema<RecipeDocument> = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, default: null },
+    image: { type: String, default: '/images/recipe-placeholder.png' },
     author: { type: ObjectId, ref: 'User', required: true },
     public: { type: Boolean, default: true },
     tags: { type: [String], default: [] },
@@ -42,8 +46,29 @@ const Recipe: Schema<RecipeDocument> = new Schema(
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
 
+Recipe.virtual('ratings', {
+  ref: 'RecipeRating',
+  localField: '_id',
+  foreignField: 'recipe'
+});
+
+Recipe.virtual('currentRating').get(function getCurrentRating(
+  this: RecipeDocument
+) {
+  if (this.ratings) {
+    const currentRating =
+      this.ratings.reduce((p, { score }) => p + score, 0) / this.ratings.length;
+
+    return currentRating;
+  }
+});
+
 Recipe.pre(/find/, function populateAuthor(this: RecipeDocument, next) {
-  this.populate('author', 'firstName lastName id');
+  this.populate({ path: 'ratings', options: { select: { score: 1 } } });
+  this.populate({
+    path: 'author',
+    options: { select: { firstName: 1, lastName: 1, id: 1 } }
+  });
   next();
 });
 
