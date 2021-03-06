@@ -65,7 +65,10 @@ export const getPaginatedRecipes = async (
   query: { [key: string]: string | number | boolean } = {}
 ): Promise<{ recipes: RecipeDocument[]; total: number }> => {
   const recipeCount = await Recipe.countDocuments(query);
-  const paginatedRecipes = await Recipe.find(query).skip(skip).limit(limit);
+  const paginatedRecipes = await Recipe.find(query)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
   return { recipes: paginatedRecipes, total: recipeCount };
 };
 

@@ -7,8 +7,8 @@ export const create = Joi.object().keys({
   author: Joi.string().required(),
   public: Joi.boolean(),
   tags: Joi.array().items(Joi.string()),
-  ingredients: Joi.array().items(Joi.string()),
-  instructions: Joi.array().items(Joi.string()),
+  ingredients: Joi.array().items(Joi.string().allow('')),
+  instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required()
 });
@@ -23,8 +23,8 @@ export const update = Joi.object().keys({
   image: Joi.string().allow(null, ''),
   public: Joi.boolean(),
   tags: Joi.array().items(Joi.string()),
-  ingredients: Joi.array().items(Joi.string()),
-  instructions: Joi.array().items(Joi.string()),
+  ingredients: Joi.array().items(Joi.string().allow('')),
+  instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required()
 });

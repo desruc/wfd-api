@@ -17,7 +17,7 @@ export interface RecipeBase {
   public: boolean;
   tags: string[];
   ingredients: string[];
-  instructions: string[];
+  instructions: string;
   prepTime?: number;
   cookingTime: number;
   ratings?: {
@@ -39,7 +39,7 @@ const Recipe: Schema<RecipeDocument> = new Schema(
     public: { type: Boolean, default: true },
     tags: { type: [String], default: [] },
     ingredients: { type: [String], default: [] },
-    instructions: { type: [String], default: [] },
+    instructions: { type: String, default: '' },
     prepTime: { type: Number, default: null },
     cookingTime: { type: Number, required: true }
   },
