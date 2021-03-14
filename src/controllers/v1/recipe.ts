@@ -1,5 +1,8 @@
 import catchErrors from '~/core/catchErrors';
 
+import CustomError from '~/core/customError';
+import { CORE_FORBIDDEN } from '~/errors/core';
+
 import * as recipeService from '~/services/recipe';
 import * as recipeRatingService from '~/services/recipeRating';
 
@@ -38,6 +41,14 @@ export const getRecipe = catchErrors(async (req, res) => {
   const result = await recipeService.getRecipeByQueryOrFail({
     _id: recipeId
   });
+
+  const { public: isPublic, author } = result;
+
+  if (!isPublic && !req.user) {
+    throw new CustomError(CORE_FORBIDDEN);
+  } else if (!isPublic && author.id !== req.user.id) {
+    throw new CustomError(CORE_FORBIDDEN);
+  }
 
   const rating = await recipeRatingService.getRatingForRecipe(recipeId);
 

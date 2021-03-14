@@ -27,7 +27,7 @@ const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
           data: {}
         };
 
-    res.status(clientError.status).send({ error: clientError });
+    res.status(clientError.status).send({ ...clientError });
   }
 };
 
