@@ -7,7 +7,12 @@ export const create = Joi.object().keys({
   author: Joi.string().required(),
   public: Joi.boolean(),
   tags: Joi.array().items(Joi.string()),
-  ingredients: Joi.array().items(Joi.string().allow('')),
+  ingredients: Joi.array().items(
+    Joi.object().keys({
+      qty: Joi.string().allow(null, ''),
+      name: Joi.string().required()
+    })
+  ),
   instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required()
@@ -23,7 +28,12 @@ export const update = Joi.object().keys({
   image: Joi.string().allow(null, ''),
   public: Joi.boolean(),
   tags: Joi.array().items(Joi.string()),
-  ingredients: Joi.array().items(Joi.string().allow('')),
+  ingredients: Joi.array().items(
+    Joi.object().keys({
+      qty: Joi.string().allow(null, ''),
+      name: Joi.string().required()
+    })
+  ),
   instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required()
