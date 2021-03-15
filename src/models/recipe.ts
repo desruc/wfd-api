@@ -27,6 +27,7 @@ export interface RecipeBase {
     score: number;
   }[];
   rating?: number;
+  originalUrl?: string;
 }
 
 export interface RecipeDocument extends RecipeBase, Document {
@@ -49,7 +50,8 @@ const Recipe: Schema<RecipeDocument> = new Schema(
     ],
     instructions: { type: String, default: '' },
     prepTime: { type: Number, default: null },
-    cookingTime: { type: Number, required: true }
+    cookingTime: { type: Number, required: true },
+    originalUrl: { type: String, default: null }
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
