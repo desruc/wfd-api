@@ -16,7 +16,10 @@ export const create = Joi.object().keys({
   instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required(),
-  originalUrl: Joi.string().uri().allow(null, '')
+  originalUrl: Joi.string().uri().allow(null, ''),
+  difficulty: Joi.string()
+    .valid('easy', 'moderate', 'difficult')
+    .allow(null, '')
 });
 
 export const rating = Joi.object().keys({
@@ -38,7 +41,10 @@ export const update = Joi.object().keys({
   instructions: Joi.string(),
   prepTime: Joi.string().allow(null, ''),
   cookingTime: Joi.string().required(),
-  originalUrl: Joi.string().uri().allow(null, '')
+  originalUrl: Joi.string().uri().allow(null, ''),
+  difficulty: Joi.string()
+    .valid('easy', 'moderate', 'difficult')
+    .allow(null, '')
 });
 
 export default create;

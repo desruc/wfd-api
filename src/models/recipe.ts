@@ -28,6 +28,7 @@ export interface RecipeBase {
   }[];
   rating?: number;
   originalUrl?: string;
+  difficulty: 'easy' | 'moderate' | 'difficult';
 }
 
 export interface RecipeDocument extends RecipeBase, Document {
@@ -51,7 +52,12 @@ const Recipe: Schema<RecipeDocument> = new Schema(
     instructions: { type: String, default: '' },
     prepTime: { type: Number, default: null },
     cookingTime: { type: Number, required: true },
-    originalUrl: { type: String, default: null }
+    originalUrl: { type: String, default: null },
+    difficulty: {
+      type: String,
+      enum: ['easy', 'moderate', 'difficult'],
+      default: 'easy'
+    }
   },
   { toObject: { virtuals: true }, toJSON: { virtuals: true }, timestamps: true }
 );
