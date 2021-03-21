@@ -66,16 +66,33 @@ export const getRecipe = catchErrors(async (req, res) => {
 export const getPublicList = catchErrors(async (req, res) => {
   const { page, skip, limit } = req.pagination;
 
-  const query = { public: true };
+  const { query } = req;
+
+  const dbQuery: {
+    public: true;
+    tags?: { $in: string[] };
+    difficulty?: string;
+  } = { public: true };
+
+  if (query.tags) {
+    dbQuery.tags = { $in: (query.tags as string).split(',') };
+  }
+
+  if (
+    query.difficulty &&
+    ['easy', 'moderate', 'difficult'].some((d) => d === query.difficulty)
+  ) {
+    dbQuery.difficulty = query.difficulty as string;
+  }
 
   const { recipes, total } = await recipeService.getPaginatedRecipes(
     skip,
     limit,
-    query
+    dbQuery
   );
 
   res.success({
-    message: 'Receipes retrieved successfully',
+    message: 'Recipes retrieved successfully',
     data: recipes,
     meta: { page, limit, total }
   });
