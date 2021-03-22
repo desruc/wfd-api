@@ -24,7 +24,8 @@ export const createRecipe = async (
   data: CreateRecipeReq
 ): Promise<RecipeDocument> => {
   const newRecipe = await new Recipe({
-    ...data
+    ...data,
+    tags: data.tags ? data.tags.map((t) => t.toLowerCase()) : []
   }).save();
 
   return newRecipe;

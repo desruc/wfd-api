@@ -75,7 +75,11 @@ export const getPublicList = catchErrors(async (req, res) => {
   } = { public: true };
 
   if (query.tags) {
-    dbQuery.tags = { $in: (query.tags as string).split(',') };
+    const lowercaseTags = (query.tags as string)
+      .split(',')
+      .map((t) => t.toLowerCase());
+
+    dbQuery.tags = { $in: lowercaseTags };
   }
 
   if (
